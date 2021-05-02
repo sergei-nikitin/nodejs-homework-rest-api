@@ -103,4 +103,27 @@ router.patch('/:contactId', updateContactValidation, async (req, res, next) => {
   }
 })
 
+router.patch('/:contactId/favorite', async (req, res, next) => {
+  try {
+    const contact = await Contacts.updateStatusContact(req.params.contactId, req.body)
+    if (contact) {
+      return res.json({
+        status: 'succes',
+        code: 200,
+        data: {
+          contact,
+        }
+      })
+    } else {
+      return res.status(404).json({
+        status: 'error',
+        code: 404,
+        data: 'Not Found',
+      })
+    }
+  } catch (e) {
+    next(e)
+  }
+})
+
 module.exports = router
