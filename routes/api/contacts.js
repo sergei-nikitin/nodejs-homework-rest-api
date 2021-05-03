@@ -1,7 +1,7 @@
 const express = require('express')
 const router = express.Router()
 const Contacts = require('../../model/contact')
-const { createContactValidation, updateContactValidation } = require('../valid-contact-router')
+const { createContactValidation, updateContactValidation, updateContactStatusValidation } = require('../valid-contact-router')
 
 router.get('/', async (req, res, next) => {
   try {
@@ -103,7 +103,7 @@ router.patch('/:contactId', updateContactValidation, async (req, res, next) => {
   }
 })
 
-router.patch('/:contactId/favorite', async (req, res, next) => {
+router.patch('/:contactId/favorite', updateContactStatusValidation, async (req, res, next) => {
   try {
     const contact = await Contacts.updateStatusContact(req.params.contactId, req.body)
     if (contact) {
