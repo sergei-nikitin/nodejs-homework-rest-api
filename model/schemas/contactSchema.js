@@ -1,5 +1,5 @@
 const mongoose = require('mongoose')
-const { Schema, model } = mongoose
+const { Schema, model, SchemaTypes } = mongoose
 
 const contactSchema = new Schema({
     name: {
@@ -16,11 +16,16 @@ const contactSchema = new Schema({
       type: Boolean,
       default: false,
   },
+  owner: {
+    type: SchemaTypes.ObjectId,
+    ref: 'user',
+  }
 })
-// contactSchema.path('name').validate((value) => {
-//     const re = /[A-Z]\w+/
-//     return re.test(String(value))
-// })
+
+contactSchema.path('name').validate((value) => {
+    const re = /[A-Z]\w+/
+    return re.test(String(value))
+})
 
 const Contact = model('contact', contactSchema)
 
