@@ -2,6 +2,7 @@ const express = require('express')
 const router = express.Router()
 const ctrl = require('../../controllers/contacts')
 const {
+  validationQueryContact,
   createContactValidation,
   updateContactValidation,
   updateContactStatusValidation,
@@ -9,7 +10,7 @@ const {
 const guard = require('../../halpers/guard')
 
 router
-  .get('/', guard, ctrl.getAllContacts)
+  .get('/', guard, validationQueryContact, ctrl.getAllContacts)
   .post('/', guard, createContactValidation, ctrl.createContact)
 
 router
